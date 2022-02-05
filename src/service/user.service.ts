@@ -1,11 +1,9 @@
 import { DocumentDefinition, FilterQuery } from "mongoose";
-import User, { UserDocument } from "../models/user.model";
+import User, { UserDocument, UserInput } from "../models/user.model";
 import { omit } from "lodash";
 import { query } from "express";
 
-export async function createUser(
-	input: DocumentDefinition<Omit<UserDocument, "createdAt" | "updatedAt" | "comparePassword">>,
-) {
+export async function createUser(input: UserInput) {
 	try {
 		const user = await User.create(input);
 		return omit(user.toJSON(), "password");
